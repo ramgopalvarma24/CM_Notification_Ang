@@ -1,0 +1,288 @@
+ <div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-1/6 bg-blue-100 shadow-lg flex flex-col">
+      <div class="p-4 text-center font-bold text-lg text-blue-600 border-b">
+        <img src="path-to-logo.png" alt="Logo" class="mx-auto w-12 h-12 mb-2">
+        HRiQ
+      </div>
+      <nav class="flex-grow">
+        <ul>
+          <li class="p-3 text-gray-700 hover:bg-blue-200 cursor-pointer">HR</li>
+          <li class="p-3 text-gray-700 hover:bg-blue-200 cursor-pointer">Leave</li>
+          <li class="p-3 text-gray-700 hover:bg-blue-200 cursor-pointer">Payroll</li>
+          <li class="p-3 text-gray-700 hover:bg-blue-200 cursor-pointer">Claims</li>
+          <li class="p-3 text-gray-700 hover:bg-blue-200 cursor-pointer">Time</li>
+          <li class="p-3 text-gray-700 hover:bg-blue-200 cursor-pointer">Learning</li>
+          <li class="p-3 text-gray-700 hover:bg-blue-200 cursor-pointer">Appraisal</li>
+          <li class="p-3 text-gray-700 hover:bg-blue-200 cursor-pointer">Security</li>
+          <li class="p-3 text-gray-700 hover:bg-blue-200 cursor-pointer">Global</li>
+        </ul>
+      </nav>
+    </aside>
+  
+    <!-- Main Content -->
+    <div class="flex-grow p-6">
+      <!-- Header -->
+      <header class="flex justify-between items-center mb-6">
+        <h6 class="text-2xl font-bold text-blue-600">Notification Message Setting</h6>
+        <div class="flex items-center">
+          <img src="path-to-avatar.jpg" alt="Avatar" class="w-10 h-10 rounded-full border mr-2">
+          <span class="text-gray-500">Admin</span>
+        </div>
+      </header>
+  
+      <!-- Main Body -->
+      <div class="grid grid-cols-3 gap-4">
+        
+        <!-- Table Section -->
+        <section class="col-span-1 border border-gray-300 rounded p-4">
+            <h6 class="text-lg font-bold text-gray-600 mb-4">Messages</h6>
+          
+            <!-- Header Row with Filters -->
+            <div class="grid grid-cols-2 items-center bg-gray-100 p-2 border-b">
+              <!-- Message ID Column -->
+              <div class="flex flex-col">
+                <span class="font-bold text-gray-700">Message ID</span>
+                <input 
+                  type="text" 
+                  placeholder="Search ID..." 
+                  class="mt-2 p-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                  (input)="filterByMessageId($event)"
+                />
+              </div>
+          
+              <!-- Subject Column -->
+              <div class="flex flex-col">
+                <span class="font-bold text-gray-700">Subject</span>
+                <input 
+                  type="text" 
+                  placeholder="Search Subject..." 
+                  class="mt-2 p-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                  (input)="filterBySubject($event)"
+                />
+              </div>
+            </div>
+          
+            <!-- List of Messages -->
+            <ul class="divide-y">
+              <li 
+                *ngFor="let notification of filteredNotifications" 
+                class="p-3 hover:bg-gray-50 cursor-pointer flex items-center"
+                (click)="loadNotification(notification.notificationMessageId)"
+              >
+                <!-- Message ID Column -->
+                <div class="w-1/2 text-gray-800">{{notification.notificationMessageId}}</div>
+          
+                <!-- Separator -->
+                <div class="w-px bg-gray-300 h-full mx-4"></div>
+          
+                <!-- Subject Column -->
+                <div class="w-1/2 text-gray-600">{{notification.notificationSubject}}</div>
+              </li>
+            </ul>
+        </section>
+          
+          
+        <!-- Notification Details Section -->
+        <section class="col-span-2 border border-gray-300 rounded p-4" *ngIf="form">
+            <div class="flex justify-between items-center mb-4">
+                <h6 class="text-lg font-bold text-gray-600">Notification Data Field</h6>
+                <div class="flex space-x-2">
+                    <!-- Add Button -->
+                    <button
+                        class="flex items-center px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                        (click)="addNewNotification()"
+                    >
+                        <i class="fas fa-plus mr-2"></i> Add
+                    </button>
+            
+                    <!-- Save Button -->
+                    <button
+                        class="flex items-center px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                        (click)="onSubmit()"
+                    >
+                        <i class="fas fa-save mr-2"></i> Save
+                    </button>
+            
+                    <!-- Delete Button -->
+                    <button
+                        class="flex items-center px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                        [disabled]="!currentNotification"
+                        (click)="onDelete()"
+                    >
+                        <i class="fas fa-trash-alt mr-2"></i> Delete
+                    </button>
+
+                    <button
+                        class="flex items-center px-3 py-2 bg-red-600 text-white rounded hover:bg-grey-700"
+                        [disabled]="!currentNotification"
+                        (click)="onCancel()"
+                    >
+                        <i class="fas fa-trash-alt mr-2"></i> Cancel
+                    </button>
+                    
+                </div>
+            </div>
+            
+          
+          
+          <div class="notification-form p-4">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <div class="grid grid-cols-2 gap-4">
+                <!-- Message ID -->
+                <div class="form-group">
+                  <label for="notificationMessageId" class="block mb-2">Message ID</label>
+                  <input 
+                    id="notificationMessageId" 
+                    type="text" 
+                    formControlName="notificationMessageId" 
+                    readonly 
+                    class="w-full p-2 border rounded"
+                  />
+                </div>
+          
+                <!-- Subject -->
+                <div class="form-group">
+                  <label for="notificationSubject" class="block mb-2">Subject</label>
+                  <input 
+                    id="notificationSubject" 
+                    type="text" 
+                    formControlName="notificationSubject" 
+                    class="w-full p-2 border rounded"
+                  />
+                </div>
+          
+                <!-- Channel -->
+                <div class="form-group">
+                  <label class="block mb-2">Channel</label>
+                  <div class="flex gap-4">
+                    <label class="inline-flex items-center">
+                      <input 
+                        type="radio" 
+                        formControlName="notificationChannel" 
+                        value="E" 
+                      />
+                      <span class="ml-2">Email</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                      <input 
+                        type="radio" 
+                        formControlName="notificationChannel" 
+                        value="M" 
+                      />
+                      <span class="ml-2">Mobile</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                      <input 
+                        type="radio" 
+                        formControlName="notificationChannel" 
+                        value="B" 
+                      />
+                      <span class="ml-2">Both</span>
+                    </label>
+                  </div>
+                </div>
+          
+                <!-- Heading -->
+                <div class="form-group col-span-2">
+                  <label for="notificationHeading" class="block mb-2">Heading</label>
+                  <input 
+                    id="notificationHeading" 
+                    type="text" 
+                    formControlName="notificationHeading" 
+                    class="w-full p-2 border rounded"
+                  />
+                </div>
+          
+                <!-- Body -->
+                <div class="form-group col-span-2">
+                  <label for="notificationBody" class="block mb-2">Body</label>
+                  <div class="border rounded p-2 mb-2">
+                    <div class="flex gap-2 mb-2">
+                      <button type="button" class="p-1 border rounded">B</button>
+                      <button type="button" class="p-1 border rounded">I</button>
+                      <button type="button" class="p-1 border rounded">U</button>
+                      <select class="border rounded">
+                        <option>Format</option>
+                      </select>
+                      <select class="border rounded">
+                        <option>Font Size</option>
+                      </select>
+                    </div>
+                    <textarea 
+                      id="notificationBody" 
+                      formControlName="notificationBody" 
+                      rows="6" 
+                      class="w-full p-2 border rounded">
+                    </textarea>
+                  </div>
+                </div>
+          
+                <!-- Footer -->
+                <div class="form-group col-span-2">
+                  <label for="notificationFooter" class="block mb-2">Footer</label>
+                  <input 
+                    id="notificationFooter" 
+                    type="text" 
+                    formControlName="notificationFooter" 
+                    class="w-full p-2 border rounded"
+                  />
+                </div>
+          
+                <!-- Repeat Notification -->
+                <div class="form-group">
+                  <label class="flex items-center">
+                    <input 
+                      type="checkbox" 
+                      formControlName="repeatNotification" 
+                      (change)="toggleRepeatFields()"
+                    />
+                    <span class="ml-2">Repeat Notification</span>
+                  </label>
+                </div>
+          
+                <!-- Repeat Details -->
+                <ng-container *ngIf="form.get('repeatNotification')?.value">
+                  <div class="form-group">
+                    <label for="repeatEvery" class="block mb-2">Repeat Every (days)</label>
+                    <input 
+                      id="repeatEvery" 
+                      type="number" 
+                      formControlName="repeatEvery" 
+                      class="w-full p-2 border rounded"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="noOfTimesToRepeat" class="block mb-2">Number of Times</label>
+                    <input 
+                      id="noOfTimesToRepeat" 
+                      type="number" 
+                      formControlName="noOfTimesToRepeat" 
+                      class="w-full p-2 border rounded"
+                    />
+                  </div>
+                </ng-container>
+          
+                <!-- Document Template -->
+                <div class="form-group col-span-2">
+                  <label class="flex items-center">
+                    <input 
+                      type="checkbox" 
+                      formControlName="useDocumentTemplate"
+                    />
+                    <span class="ml-2">Use Document Template</span>
+                  </label>
+                </div>
+          
+                <!-- Buttons -->
+                
+              </div>
+            </form>
+          </div>
+          
+        
+        </section>
+      </div>
+    </div>
+  </div>
+  

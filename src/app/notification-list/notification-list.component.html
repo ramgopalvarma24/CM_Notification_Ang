@@ -1,0 +1,44 @@
+
+<div class="container">
+    <h1 class="text-center my-1">Welcome to HRIQ</h1>
+  </div>
+  
+
+  <div class="p-4">
+    <div class="flex justify-between mb-4">
+      <h2 class="text-xl font-bold">Notification Messages</h2>
+      <button (click)="onAdd()" class="px-4 py-2 bg-blue-600 text-blue-600 rounded">
+        Add New
+      </button>
+    </div>
+
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-2 text-left">ID</th>
+          <th class="p-2 text-left">Subject</th>
+          <th class="p-2 text-left">Channel</th>
+          <th class="p-2 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let notification of notifications" class="border-b">
+          <td class="p-2">{{notification.notificationMessageId}}</td>
+          <td class="p-2">{{notification.notificationSubject}}</td>
+          <td class="p-2">{{getChannelDisplay(notification.notificationChannel)}}</td>
+          <td class="p-2">
+            <button (click)="onEdit(notification)" class="mr-2 text-blue-600 btn">
+              Edit
+            </button>
+            <button (click)="onDelete(notification)" class="text-red-600">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
