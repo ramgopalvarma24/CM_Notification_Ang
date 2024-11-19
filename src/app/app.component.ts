@@ -6,7 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { SidebarComponent } from "./sidebar/sidebar.component";
+
 import { NotificationListComponent } from "./notification-list/notification-list.component";
 
 
@@ -20,7 +20,7 @@ import { NotificationFormComponent } from "./notification-form/notification-form
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatListModule, MatSidenavModule, MatToolbarModule, MatIcon, MatIconModule, SidebarComponent, NotificationListComponent,
+  imports: [RouterOutlet, MatListModule, MatSidenavModule, MatToolbarModule, MatIcon, MatIconModule,NotificationListComponent,
     CommonModule, ReactiveFormsModule, NotificationFormComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
