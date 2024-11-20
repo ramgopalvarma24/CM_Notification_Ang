@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 
 import { CommonModule } from '@angular/common';
+import { timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-notification-form',
@@ -23,11 +24,7 @@ export class NotificationFormComponent implements OnInit {
   isEdit = false;
   notifications: NotificationMessage[] = [];
   //test data
-  notificationss = [
-    { notificationMessageId: 'N001', notificationSubject: 'Reset Password' },
-    { notificationMessageId: 'N002', notificationSubject: 'Subject 2' },
-    { notificationMessageId: 'N003', notificationSubject: 'Subject 3' },
-  ];
+  
   currentNotification: NotificationMessage | null = null;
   filteredNotifications = [...this.notifications];
 
@@ -106,26 +103,9 @@ export class NotificationFormComponent implements OnInit {
     }
   }
 
-  onSubmit_D(): void {
-    if (this.form.valid) {
-      const notification: NotificationMessage = {
-        ...this.form.getRawValue(),
-        repeatNotification: this.form.get('repeatNotification')?.value ? 'Y' : 'N',
-        useDocumentTemplate: this.form.get('useDocumentTemplate')?.value ? 'YES' : 'NO'
-      };
-
-      const operation = this.isEdit ?
-        this.notificationService.updateNotification(notification.notificationMessageId, notification) :
-        this.notificationService.createNotification(notification);
-
-      operation.subscribe(() => {
-        this.router.navigate(['/notifications']);
-      });
-    }
-  }
-
   onSubmit(): void {
     if (this.form.valid) {
+      const currentUser = 'Ram'; //it can take it from logged in user
       const notification: NotificationMessage = {
         ...this.form.getRawValue(),
         repeatNotification: this.form.get('repeatNotification')?.value ? 'Y' : 'N',
@@ -134,6 +114,10 @@ export class NotificationFormComponent implements OnInit {
 
       if (this.isEdit) {
         // Update existing notification
+        notification.updatedDate = new Date(); // Set updated date
+        notification.updatedBy = currentUser; 
+        console.log(notification);
+
         this.notificationService
           .updateNotification(notification.notificationMessageId, notification)
           .subscribe(() => {
@@ -144,8 +128,10 @@ export class NotificationFormComponent implements OnInit {
         // Create new notification
         console.log("check notification");
         console.log(notification)
-        //updating messageID
+        notification.createdDate = new Date(); 
+        notification.createdBy = currentUser;
         notification.notificationMessageId = 0;
+        console.log(notification);
         this.notificationService.createNotification(notification).subscribe(() => {
           this.loadNotifications();
           this.resetForm();

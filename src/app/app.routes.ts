@@ -5,7 +5,7 @@ import { NotificationFormComponent } from './notification-form/notification-form
 
 
 export const routes: Routes = [
-    {path : '', component: NotificationFormComponent},
+    {path : '', component: NotificationListComponent},
     {path : 'notifications', component: NotificationListComponent},
     {path : 'notifications/new', component: NotificationFormComponent},
     {path : 'notifications/edit/:id', component: NotificationFormComponent},

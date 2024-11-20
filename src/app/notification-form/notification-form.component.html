@@ -88,40 +88,43 @@
             <div class="flex justify-between items-center mb-4">
                 <h6 class="text-lg font-bold text-gray-600">Notification Data Field</h6>
                 <div class="flex space-x-2">
-                    <!-- Add Button -->
-                    <button
-                        class="flex items-center px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                        (click)="addNewNotification()"
-                    >
-                        <i class="fas fa-plus mr-2"></i> Add
-                    </button>
-            
-                    <!-- Save Button -->
-                    <button
-                        class="flex items-center px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                        (click)="onSubmit()"
-                    >
-                        <i class="fas fa-save mr-2"></i> Save
-                    </button>
-            
-                    <!-- Delete Button -->
-                    <button
-                        class="flex items-center px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                        [disabled]="!currentNotification"
-                        (click)="onDelete()"
-                    >
-                        <i class="fas fa-trash-alt mr-2"></i> Delete
-                    </button>
-
-                    <button
-                        class="flex items-center px-3 py-2 bg-red-600 text-white rounded hover:bg-grey-700"
-                        [disabled]="!currentNotification"
-                        (click)="onCancel()"
-                    >
-                        <i class="fas fa-trash-alt mr-2"></i> Cancel
-                    </button>
-                    
+                  <!-- Add Button -->
+                  <button
+                    class="flex items-center px-3 py-2 bg-gray-200 text-black rounded hover:bg-gray-300"
+                    (click)="addNewNotification()"
+                  >
+                    <i class="fas fa-plus mr-2"></i> New
+                  </button>
+                
+                  <!-- Save Button -->
+                  <button
+                    class="flex items-center px-3 py-2 bg-gray-200 text-black rounded hover:bg-gray-300"
+                    (click)="onSubmit()"
+                  >
+                    <i class="fas fa-save mr-2"></i> Save
+                  </button>
+                
+                  <!-- Delete Button -->
+                  <button
+                    class="flex items-center px-3 py-2 bg-gray-200 text-black rounded hover:bg-gray-300"
+                    [disabled]="!currentNotification"
+                    (click)="onDelete()"
+                  >
+                    <i class="fas fa-trash-alt mr-2"></i> Delete
+                  </button>
+                
+                  <!-- Cancel Button -->
+                  <button
+                    class="flex items-center px-3 py-2 bg-gray-200 text-black rounded hover:bg-gray-300"
+                    [disabled]="!currentNotification"
+                    (click)="onCancel()"
+                  >
+                    <i class="fas fa-times mr-2"></i> Cancel
+                  </button>
                 </div>
+                 
+        
+                
             </div>
             
           
